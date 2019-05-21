@@ -1,0 +1,83 @@
+Up to this point, you learned how to create flows for a conversation between the agent and the user. You've learned how to create intents, annotate them with relevant entities and how to keep the context of the conversation. Now, what if you want to allow the agent to do more than that? What if you decide to persist the pizza ordered to a database? Which will allow the agent to provide prices of items stored in the database. You can achieve that with fulfillment. Fulfillment is the mapping of an action using code that is deployed outside of dialogue flow. These allows your agent to execute external business logic on an intent by intent basis. Upon the detection of an intent which corresponds to an action that needs to be taken, the agent should be enable to talk to external systems in order for the actions to be fulfilled. We can write code for these communication, we think that console or using an IDE of choice. For this example, we'll use the inline editor for Cloud Functions under the fulfillment menu option. In a later module, we'll cover how to use a web hook to achieve fulfillment. Before I show you a demo of how to setup fulfillment, let's address one more thing. For placing an order for pizza for example, let's say that the back-end system needs to know at least three pieces of information; the size of the pizza, the toppings, and the pickup time. These would be three different entities that we need to identify and extract from the customer request. If the customer says, "Can I have a pizza?" We need to make the agent ask for the additional information needed before the order can be placed or sent to the backend system responsible for placing orders. How can we collect these missing pieces of information? You might feel inclined to use follow-up intents or context to do so. However, there is a more efficient way to do it, it is through this slot feeling functionality. To use this slot filling, you set the needed parameter values corresponding to the entities in the request to be required. If users omit one or more of the parameters in their response, your agent prompts them to provide values for each missing parameter. Let's see an example of how to use his log filling and fulfill that pizza order request. In this demo, I'm going to write a Cloud function to the fulfillment where it takes the pizza order from the agent and stores in Cloud Datastore which I have already set up. So the first step if you remember, is to make sure that all of the required parameters to fulfill an action are collected. So let's say the user says [inaudible] I want a pizza, but we need to know the toppings. If that's the case, we're going to check, pizza topping as required and get a prompt to then ask the user for that information, if it hasn't been provided yet. Let's say that also the size of the pizza should be told. For example, if they want a slice or if they want the whole pie. So you can add, "Would you like a slice or the whole pie?" That will allow the agent to ask for the information once it's not captured. You'll notice here also that "Is list" option is checked for toppings and that's because the agent recognized that we think one request, there may be many instances of the entity. Click Save. So there is this slot filling functionality we talked about, where the agent will make sure that all of the information needed to fulfill the action is collected. Now when you switch to fulfillment, we see the inline editor and that's the section we are going to be using today. We enabled the inline editor to use Cloud Functions for Firebase, and you see that there is already a template with some code written in nodeJS, that is provided to you. We also have a package.josn file, we need to modify these. We need to make sure, since we're using Cloud Datastore, that the dependency for Cloud Datastore is added in the list of dependencies. So we can type @google-cloud/datastore. The version we're going to be using version 0.8.0. That's the only line in each we had put these example. So let's click Deploy. We see here the message that says successfully provisioned cloud function as for your project. So let's check it. Now, we are in the GCP Console and that's where we can look at our cloud functions that have been deployed so far. You see here the dialogue flow Firebase fulfillment as being successfully deployed. Once we go back, we said that that was indeed the name we provided. It was automatically created for you, for this example. Going back to the index NodeJS, there's still a couple of things we need to do but I just want you to understand the structure of this piece of code. So we have here the declaration of some required packages that we need to import, and we do need to import data store as well. We will be defining a process environment variable for debugging. So, we will be importing the Datastore package line 11. In line 12, we will be creating a new instance of data store, pointing to the project ID that we currently have. So you can get the project ID from the main page on GCP. You can copy the project ID and paste it within your new instance of Datastore. Now, we store the main function of this piece of code. We have a function for the welcome agent, we have a function for the phobic agent, we have no function for the order pizza and that's what we're going to be adding here. Scrolling down, you see that once you created a function, then you need to map an intent to the execution of that function and we do that by adding an entry to the indent map. First, let's create a function for the order pizza example. So now we have the function order pizza, which defines variables for extracting the parameters from the user request. It creates a key to store in the database, and then it creates a new entity. That entity will contain and hold the variables values. The return of this function is an action of savings to Datastore, the content of the entity that we created. In the last step that we should not forget, it should add the intent map. So we can say intentMap.set and then we create a new mapping upon the detection of the intent order pizza, mapped to the order pizza function. Once we've done that, we added the code, we can then hit deploy. Once that function is successfully deployed, we'll then be able to attach the agent. So, I will switch to agent line where I have already created all of the functions that we need. It's a cleaner code. So now, we can test by saying, "Can I have a pizza?" The agent responds, "Yum, what topics would do like?" And then let's say, "Cheese and mushrooms." Then he asks, "Would you like a slice or whole pie?" Let's go with a slice. It is still going. So you've seen here that the pizza entry as a slice as the size and cheese and mushroom as the toppings. So let's try another example. I can say can I have a pizza? So I'm here providing the time, which if you remember is not required but it will be detected and added to the database as well. So toppings beef and sausage and now I want a whole pie. Your order for beef, sausage pizza had been placed and then as we go back to Datastore and refresh the page, you'll see the new whole pie pizza with beef and sausage.
+
+
+
+// See https://github.com/dialogflow/dialogflow-fulfillment-nodejs
+// for Dialogflow fulfillment library docs, samples, and to report issues
+'use strict';
+ 
+const functions = require('firebase-functions');
+const {WebhookClient} = require('dialogflow-fulfillment');
+const {Card, Suggestion} = require('dialogflow-fulfillment');
+const { dialogflow, Permission } = require('actions-on-google');
+ 
+process.env.DEBUG = 'dialogflow:debug'; // enables lib debugging statements
+ 
+exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
+  const agent = new WebhookClient({ request, response });
+  console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
+  console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
+ 
+  function welcome(agent) {
+    agent.add(`Welcome to my agent!`);
+  }
+ 
+  function fallback(agent) {
+    agent.add(`I didn't understand`);
+    agent.add(`I'm sorry, can you try again?`);
+  }
+  
+  function geolocation(agent) {
+    agent.add(`Welcome to Genius location!`);
+    let conv = agent.conv(); // Get Actions on Google library conv instance
+    conv.data.requestedPermission = 'DEVICE_PRECISE_LOCATION';
+    conv.ask(new Permission({
+            context: 'to locate you',
+            permissions: conv.data.requestedPermission,
+      }));
+    agent.add(conv); // Add Actions on Google library responses to your agent's response
+  }
+
+  function currentlocation(agent) {
+    agent.add(`I know where you are.`);
+    let conv = agent.conv();
+	const {coordinates} = conv.device.location;
+	const {city} = conv.device.location;
+ 	if (city) {
+        //conv.ask(`You are at ${coordinates.latitude}/${coordinates.longitude}`);
+      	conv.ask(`You are at ${city}`);
+        const lifespan = 5;
+  		//const contextParameters = {location: [coordinates.latitude, coordinates.longitude]};
+  		const contextParameters = {location: `${city}`};
+        conv.contexts.set('locationContext', lifespan, contextParameters);
+		//conv.close(`You are at ${coordinates.latitude}/${coordinates.longitude}`);
+	} else {
+		// Note: Currently, precise locaton only returns lat/lng coordinates on phones and lat/lng coordinates
+		// and a geocoded address on voice-activated speakers.
+		// Coarse location only works on voice-activated speakers.
+		conv.close('Sorry, I could not figure out where you are.');
+	}
+    agent.add(conv);
+  }
+  
+  function routing(agent) {
+    agent.add(`listen!`);
+    let conv = agent.conv();
+    //todo: call backend to get route steps
+    //const {steps} = ['turn_left', 'turn_right', 'stairs_up', 'stairs_down', 'walk_x_meters'];
+    //for (step as steps){
+      conv.ask('Turn left, go stairs up, pass in front of Brezelkönig, continue walking till platform 5, stairs-up');
+    //}
+    agent.add(conv);
+  }
+
+  // Run the proper function handler based on the matched Dialogflow intent name
+  let intentMap = new Map();
+  intentMap.set('geolocation', geolocation);
+  //intentMap.set('Default Welcome Intent', welcome);
+  intentMap.set('Default Fallback Intent', fallback);
+  //intentMap.set('geolocation', geolocation);
+  intentMap.set('current_location', currentlocation);
+  // intentMap.set('your intent name here', googleAssistantHandler);
+  agent.handleRequest(intentMap);
+});

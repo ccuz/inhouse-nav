@@ -10,24 +10,32 @@ import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
+import akka.http.javadsl.unmarshalling.Unmarshaller;
 import akka.stream.ActorMaterializer;
 import akka.stream.Materializer;
 import akka.stream.javadsl.Flow;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * Akka Streams server on port 8080
  * see https://doc.akka.io/docs/akka-http/10.1.8/routing-dsl/index.html?language=java
  */
 public class DialogFlowFunction extends AllDirectives {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DialogFlowFunction.class);
 
     private InHouseNavigationDialogFlowApp dialogFlowApp = new InHouseNavigationDialogFlowApp();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         final ActorSystem system = ActorSystem.create();
         final Materializer materializer = ActorMaterializer.create(system);
 
@@ -43,6 +51,9 @@ public class DialogFlowFunction extends AllDirectives {
         //final CompletionStage<ServerBinding> binding = http.bindAndHandle(dialogFlowAgent.handleRequestResponseFlow(),
         //        ConnectHttp.toHost("localhost", 8080), materializer);
 
+        System.out.println("Type RETURN to exit");
+        System.in.read();
+
         binding
                 .exceptionally(failure -> {
                             System.err.println("Something very bad happened! " + failure.getMessage());
@@ -50,6 +61,7 @@ public class DialogFlowFunction extends AllDirectives {
                 })
                 .thenCompose(ServerBinding::unbind) // trigger unbinding from the port
                 .thenAccept(unbound -> system.terminate()); // and shutdown when done
+
     }
 
 
@@ -74,23 +86,40 @@ public class DialogFlowFunction extends AllDirectives {
      */
     private Route handleDialogFlowRequest(){
         final Route defaultRoute =
-                post(() ->
-                        path("/", () ->
-                                withoutSizeLimit(() ->
-                                        extractRequest(request -> {
-                                            CompletableFuture<String> response = dialogFlowApp.handleRequest(
-                                                    request.entity().getDataBytes().toString(),
-                                                    getHeadersMap(request.getHeaders()));
-                                            //final CompletionStage<Done> res = r..discardEntityBytes(materializer).completionStage();
-
-                                            return onComplete(() -> response, done ->
-                                                    // we only want to respond once the incoming data has been handled:
-                                                    complete("Finished writing data :" + done));
-                                        })
-                                )
-                        )
-                );
+                post(postRoutes());
         return defaultRoute;
+    }
+
+    @NotNull
+    private Supplier<Route> postRoutes() {
+        return () -> pathSingleSlash(postRootRoute());
+    }
+
+    @NotNull
+    private Supplier<Route> postRootRoute() {
+        return () -> extractRequest(googleActionRequestHandler());
+        //return () -> withoutSizeLimit(
+        //        () -> extractRequest(googleActionRequestHandler())
+        //        );
+    }
+
+    @NotNull
+    private Function<HttpRequest, Route> googleActionRequestHandler() {
+        return request ->
+            entity(Unmarshaller.entityToString(), body -> {
+                LOGGER.debug("body: " + body);
+
+                CompletableFuture<String> response = dialogFlowApp.handleRequest(body,
+                        getHeadersMap(request.getHeaders()));
+                //final CompletionStage<Done> res = r..discardEntityBytes(materializer).completionStage();
+
+                return onComplete(() -> response, done -> {
+                    String responseString = done.toString();
+                    LOGGER.debug("response: " + responseString);
+                    // we only want to respond once the incoming data has been handled:
+                    return complete(responseString);
+                });
+            });
     }
 
     private Map<String, String> getHeadersMap(Iterable<HttpHeader> requestHeaders) {

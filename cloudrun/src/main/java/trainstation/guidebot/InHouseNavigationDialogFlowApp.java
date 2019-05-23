@@ -10,8 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static java.text.MessageFormat.format;
 import static org.apache.commons.lang.StringUtils.isNotBlank;
@@ -25,7 +24,7 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
 
     private ResourceBundle messages = ResourceBundle.getBundle("messages");
 
-    @ForIntent("welcome")
+    @ForIntent("Welcome")
     public ActionResponse welcome(ActionRequest request) {
         /**
          * agent.add(`Welcome to Genius location!`);
@@ -81,14 +80,19 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
 
             Context locationContext = new Context();
             locationContext.setLifespanCount(5);
-            locationContext.getParameters().put("location", city);
+            HashMap params = new HashMap();
+            params.put("location", city);
+            locationContext.setParameters(params);
             locationContext.setName("locationContext");
 
             WebhookResponse response = new WebhookResponse();
-            response.getOutputContexts().add(locationContext);
+            List outputContexts = new ArrayList<>();
+            outputContexts.add(locationContext);
+            response.setOutputContexts(outputContexts);
 
-            responseBuilder.add(format(messages.getString("youAreAt"), city));
-            responseBuilder.use(response);
+            final String locationString = format(messages.getString("youAreAt"), city);
+            responseBuilder.add(locationString);
+            responseBuilder = responseBuilder.use(response);
         } else {
             responseBuilder
                     .add("Sorry, I could not figure out where you are.");
@@ -122,11 +126,15 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
 
         Context routingContext = new Context();
         routingContext.setLifespanCount(5);
-        routingContext.getParameters().put("route", mockedResponse);
+        HashMap params = new HashMap();
+        params.put("route", mockedResponse);
+        routingContext.setParameters(params);
         routingContext.setName("route");
 
         WebhookResponse response = new WebhookResponse();
-        response.getOutputContexts().add(routingContext);
+        List outputContexts = new ArrayList<>();
+        outputContexts.add(routingContext);
+        response.setOutputContexts(outputContexts);
 
         ResponseBuilder responseBuilder = getResponseBuilder(request);
         responseBuilder.add(mockedResponse);

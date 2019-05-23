@@ -17,6 +17,7 @@ import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 /**
  * see https://github.com/actions-on-google/actions-on-google-java for documentation
+ * and https://medium.com/google-developers/announcing-the-java-kotlin-client-library-for-actions-on-google-217828dead
  */
 public class InHouseNavigationDialogFlowApp extends DialogflowApp {
 

@@ -35,3 +35,9 @@ run {
     mainClassName = 'DialogFlowFunction'
     standardInput = System.in
 }
+
+
+jar {
+    baseName = 'dialogflow-cloudrun'
+    version =  '0.1.0'
+}

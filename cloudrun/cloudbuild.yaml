@@ -9,7 +9,7 @@ steps:
   args: ['build']
 # Build gcp cloudrun image with the fulfillment java server
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/$PROJECT_ID/cloudrunfunction', '-f', './cloudrun/src/main/docker/Dockerfile']
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/cloudrunfunction', './cloudrun/src/main/docker/Dockerfile']
 # Deploy the fulfillment server on gcp cloudrun: gcloud beta run deploy --image gcr.io/[PROJECT-ID]/dialogflowcloudrun \
 #      --set-env-vars="JAVA_TOOL_OPTIONS=-XX:MaxRAM=256m"
 - name: 'gcr.io/cloud-builders/gcloud'

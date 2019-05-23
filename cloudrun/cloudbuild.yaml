@@ -15,11 +15,12 @@ steps:
 # Deploy the fulfillment server on gcp cloudrun: gcloud beta run deploy --image gcr.io/[PROJECT-ID]/dialogflowcloudrun \
 #      --set-env-vars="JAVA_TOOL_OPTIONS=-XX:MaxRAM=256m"
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['beta', 'run', 'deploy', '--image', 'gcr.io/[PROJECT-ID]/dialogflowcloudrun', '--set-env-vars="JAVA_TOOL_OPTIONS=-XX:MaxRAM=256m"']
+  args: ['beta', 'run', 'deploy', '--image', 'gcr.io/$PROJECT_ID/dialogflowcloudrun', '--region=${_REGION_NAME}', '--set-env-vars="JAVA_TOOL_OPTIONS=-XX:MaxRAM=256m"']
+  region:
 
 substitutions:
 #_BUCKET: this-is-my-bucket
-#_REGION_NAME: #region to deploy project
+_REGION_NAME: #region to deploy project
 
 timeout: 1200s
 images: ['gcr.io/$PROJECT_ID/cloudrunfunction']

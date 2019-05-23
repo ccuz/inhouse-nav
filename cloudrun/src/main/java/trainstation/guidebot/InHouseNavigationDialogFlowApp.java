@@ -110,10 +110,10 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
          *     //todo: call backend to get route steps
          *     //const {steps} = ['turn_left', 'turn_right', 'stairs_up', 'stairs_down', 'walk_x_meters'];
          *     //for (step as steps){
-         *       conv.ask(`Turn left, go stairs up, pass in front of Brezelkönig, continue walking till platform ${conv.parameters.destination}, stairs-up`);
+         *       conv.ask(`Turn left, go stairs up, pass in front of Brezelkonig, continue walking till platform ${conv.parameters.destination}, stairs-up`);
          *     //}
          *     const lifespan = 5;
-         *   	const contextParameters = {route: 'Turn left, go stairs up, pass in front of Brezelkönig, continue walking till platform 5, stairs-up'};
+         *   	const contextParameters = {route: 'Turn left, go stairs up, pass in front of Brezelkonig, continue walking till platform 5, stairs-up'};
          *     conv.contexts.set('route', lifespan, contextParameters);
          *
          *     agent.add(conv);
@@ -123,7 +123,7 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
 
         String destination = (String) request.getParameter("destination");
 
-        String mockedResponse = format("Turn left, go stairs up, pass in front of Brezelkönig, continue walking till platform ${0}, stairs-up", destination);
+        String mockedResponse = format("Turn left, go stairs up, pass in front of Brezelkoenig, continue walking till platform ${0}, stairs-up", destination);
 
         Context routingContext = new Context();
         routingContext.setLifespanCount(5);

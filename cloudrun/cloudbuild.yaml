@@ -7,9 +7,11 @@ steps:
 # Build fulfillment java-akka-http server for action-on-google dialogflow...pfff that's long
 - name: 'gcr.io/cloud-builders/gradle'
   args: ['build']
+  dir: 'cloudrun'
 # Build gcp cloudrun image with the fulfillment java server
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/$PROJECT_ID/cloudrunfunction', './cloudrun/src/main/docker/Dockerfile']
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/cloudrunfunction', '-f', 'Dockerfile', './']
+  dir: 'cloudrun'
 # Deploy the fulfillment server on gcp cloudrun: gcloud beta run deploy --image gcr.io/[PROJECT-ID]/dialogflowcloudrun \
 #      --set-env-vars="JAVA_TOOL_OPTIONS=-XX:MaxRAM=256m"
 - name: 'gcr.io/cloud-builders/gcloud'

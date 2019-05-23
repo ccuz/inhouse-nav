@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+apply plugin: 'application'
+apply plugin: 'idea'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+ext {
+    scalaVersion = "2.12"
+    akkaVersion = "2.5.23"
+    akkaHttpVersion = "10.1.+"
+}
+
+dependencies {
+    compile "com.typesafe.akka:akka-actor_${scalaVersion}:${akkaVersion}"
+    compile "com.typesafe.akka:akka-stream_${scalaVersion}:${akkaVersion}"
+    compile "com.typesafe.akka:akka-http_${scalaVersion}:${akkaHttpVersion}"
+
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+    compile group: 'com.google.actions', name: 'actions-on-google', version: '1.+'
+
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+}
+
+run {
+    mainClassName = 'DialogFlowFunction'
+    standardInput = System.in
+}

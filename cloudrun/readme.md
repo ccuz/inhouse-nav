@@ -20,3 +20,7 @@ See https://github.com/googleapis/googleapis/tree/master/google/cloud/dialogflow
 
 # To test your bot
 https://console.actions.google.com/project/[projectName]/simulator
+
+#clean-up
+Go to https://console.cloud.google.com/run?project=[projectName] to delete your cloud-run function
+Go to https://console.dialogflow.com/api-client, select your agent to delete it (scroll till the bottom of the page)

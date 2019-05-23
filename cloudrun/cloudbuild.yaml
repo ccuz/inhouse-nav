@@ -17,7 +17,7 @@ steps:
 
 substitutions:
 #_BUCKET: this-is-my-bucket
-_REGION_NAME: #region to deploy project
+#_REGION_NAME: #region to deploy project
 
 timeout: 1200s
 images: ['gcr.io/$PROJECT_ID/cloudrunfunction']

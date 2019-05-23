@@ -16,7 +16,6 @@ steps:
 #      --set-env-vars="JAVA_TOOL_OPTIONS=-XX:MaxRAM=256m"
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['beta', 'run', 'deploy', '--image', 'gcr.io/$PROJECT_ID/dialogflowcloudrun', '--region=${_REGION_NAME}', '--set-env-vars="JAVA_TOOL_OPTIONS=-XX:MaxRAM=256m"']
-  region:
 
 substitutions:
 #_BUCKET: this-is-my-bucket

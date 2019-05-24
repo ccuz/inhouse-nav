@@ -32,14 +32,21 @@ dependencies {
 }
 
 run {
-    mainClassName = 'DialogFlowFunction'
+    mainClassName = 'trainstation.guidebot.DialogFlowFunction'
     standardInput = System.in
+    jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
 }
-
 
 jar {
     baseName = 'dialogflow-cloudrun'
     version =  '0.1.0'
+    manifest {
+        attributes "Main-Class": "trainstation.guidebot.DialogFlowFunction"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 tasks.withType(JavaCompile){

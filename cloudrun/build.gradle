@@ -37,6 +37,8 @@ run {
     jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
 }
 
+mainClassName = 'trainstation.guidebot.DialogFlowFunction'
+
 jar {
     baseName = 'dialogflow-cloudrun'
     version =  '0.1.0'

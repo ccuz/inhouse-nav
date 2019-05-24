@@ -1,8 +1,8 @@
 # Stage 1: Build the native image
 FROM oracle/graalvm-ce:1.0.0-rc15 as graalvm
-COPY build/libs/dialogflow-cloudrun-0.1.0.jar /home/app/1.0.0-rc15
+COPY build/libs/dialogflow-cloudrun-0.1.0.jar /home/app/server.jar
 WORKDIR /home/app
-RUN native-image --no-server -cp 1.0.0-rc15
+RUN native-image --no-server -cp server.jar
 
 # Stage 3: Prepare Server
 FROM frolvlad/alpine-glibc

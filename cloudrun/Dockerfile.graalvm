@@ -7,5 +7,5 @@ RUN native-image --no-server -cp server.jar -H:Class=trainstation.guidebot.Dialo
 # Stage 3: Prepare Server
 FROM frolvlad/alpine-glibc
 EXPOSE 8080
-COPY --from=graalvm /home/app/dialogflow-cloudrun-native.jar .
-ENTRYPOINT ["./dialogflow-cloudrun-native.jar"]
+COPY --from=graalvm /home/app/dialogflow-cloudrun-native .
+ENTRYPOINT ["./dialogflow-cloudrun-native"]

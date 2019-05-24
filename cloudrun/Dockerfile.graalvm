@@ -2,10 +2,10 @@
 FROM oracle/graalvm-ce:1.0.0-rc15 as graalvm
 COPY build/libs/dialogflow-cloudrun-0.1.0.jar /home/app/server.jar
 WORKDIR /home/app
-RUN native-image --no-server -cp server.jar
+RUN native-image --no-server -cp server.jar -H:Class=trainstation.guidebot.DialogFlowFunction -H:Name=dialogflow-cloudrun-native
 
 # Stage 3: Prepare Server
 FROM frolvlad/alpine-glibc
 EXPOSE 8080
-COPY --from=graalvm /home/app/dialogflow-cloudrun.jar .
-ENTRYPOINT ["./dialogflow-cloudrun.jar"]
+COPY --from=graalvm /home/app/dialogflow-cloudrun-native.jar .
+ENTRYPOINT ["./dialogflow-cloudrun-native.jar"]

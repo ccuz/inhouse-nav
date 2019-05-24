@@ -26,6 +26,8 @@ import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import static org.apache.commons.lang.StringUtils.isNotBlank;
+
 /**
  * Akka Streams server on port 8080
  * see https://doc.akka.io/docs/akka-http/10.1.8/routing-dsl/index.html?language=java
@@ -36,6 +38,10 @@ public class DialogFlowFunction extends AllDirectives {
     private InHouseNavigationDialogFlowApp dialogFlowApp = new InHouseNavigationDialogFlowApp();
 
     public static void main(String[] args) throws IOException {
+        int defaultPort = 8080;
+        if (isNotBlank(System.getenv("PORT"))){
+            defaultPort = Integer.parseInt(System.getenv("PORT"));
+        }
         final ActorSystem system = ActorSystem.create();
         final Materializer materializer = ActorMaterializer.create(system);
 
@@ -46,7 +52,7 @@ public class DialogFlowFunction extends AllDirectives {
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = dialogFlowAgent.
                 handleDialogFlowRequest().flow(system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(routeFlow,
-                ConnectHttp.toHost("localhost", 8080), materializer);
+                ConnectHttp.toHost("0.0.0.0", defaultPort), materializer);
 
         //final CompletionStage<ServerBinding> binding = http.bindAndHandle(dialogFlowAgent.handleRequestResponseFlow(),
         //        ConnectHttp.toHost("localhost", 8080), materializer);

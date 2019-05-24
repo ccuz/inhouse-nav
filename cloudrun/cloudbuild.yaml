@@ -12,6 +12,9 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/cloudrunfunction', '-f', 'Dockerfile', './']
   dir: 'cloudrun'
+# Push to private registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/cloudrunfunction']
 # Deploy the fulfillment server on gcp cloudrun: gcloud beta run deploy inhouse-webhook --image gcr.io/[PROJECT-ID]/dialogflowcloudrun \
 #      --set-env-vars="JAVA_TOOL_OPTIONS=-XX:MaxRAM=256m"
 # see https://cloud.google.com/sdk/gcloud/reference/beta/run/deploy

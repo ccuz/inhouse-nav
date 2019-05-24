@@ -1,0 +1,11 @@
+# Stage 1: Build the native image
+FROM oracle/graalvm-ce:latest as graalvm
+COPY build/libs/dialogflow-cloudrun-0.1.0.jar /home/app/dialogflow-cloudrun.jar
+WORKDIR /home/app
+RUN native-image --no-server -cp dialogflow-cloudrun.jar
+
+# Stage 3: Prepare Server
+FROM frolvlad/alpine-glibc
+EXPOSE 8080
+COPY --from=graalvm /home/app/dialogflow-cloudrun.jar .
+ENTRYPOINT ["./dialogflow-cloudrun.jar"]

@@ -10,4 +10,4 @@ ADD build/libs/dialogflow-cloudrun-0.1.0.jar dialogflow-cloudrun.jar
 EXPOSE 8080
 
 # Run the web service on container startup.
-CMD ["java","-Djava.security.egd=file:/dev/./urandom","-Dserver.port=${PORT}","-jar","/dialogflow-cloudrun.jar"]
+CMD ["java","-Djava.security.egd=file:/dev/./urandom","-Dserver.port=8080","-jar","/dialogflow-cloudrun.jar"]

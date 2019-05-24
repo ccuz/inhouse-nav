@@ -5,7 +5,7 @@
 FROM adoptopenjdk/openjdk8:jdk8u202-b08-alpine-slim
 
 #Copy the gradle jar into docker image
-ADD build/libs/dialogflow-cloudrun-0.1.0.jar dialogflow-cloudrun.jar
+ADD build/libs/cloudrun-all.jar /dialogflow-cloudrun.jar
 
 ENV PORT=8080
 EXPOSE 8080

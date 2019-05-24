@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '4.0.2'
 }
 
 apply plugin: 'application'
@@ -45,10 +46,10 @@ jar {
     manifest {
         attributes "Main-Class": "trainstation.guidebot.DialogFlowFunction"
     }
+}
 
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+shadowJar {
+    mergeServiceFiles('reference.conf')
 }
 
 tasks.withType(JavaCompile){

@@ -56,7 +56,7 @@ public class DialogFlowFunction extends AllDirectives {
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(routeFlow,
                 ConnectHttp.toHost("0.0.0.0", defaultPort), materializer);
 
-        System.out.println(format("Type RETURN to exit the server running on {0}", defaultPort));
+        System.out.println(format("The server running on %d", defaultPort));
 
         /*binding.exceptionally(failure -> {
                             System.err.println("Something very bad happened! " + failure.getMessage());

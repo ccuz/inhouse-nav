@@ -1,0 +1,43 @@
+{
+  "user": {
+    "userId": "ABwppHGJZoqsfTC5EDSHI-A29ns2vCwg_bx1GJqiv8umpgQK9uRjTxTB12SH4cI2zhPOb3kCCNidUio",
+    "locale": "fr-FR",
+    "lastSeen": "2019-05-24T12:15:19Z"
+  },
+  "conversation": {
+    "conversationId": "ABwppHFfCfcapAKYB0Vx8gzAiZdUGqdZiKpn1vcul6YXA6y_bCDf0NZLf2aq1cvXyfqXPW1fIZdGoso",
+    "type": "NEW"
+  },
+  "inputs": [
+    {
+      "intent": "actions.intent.MAIN",
+      "rawInputs": [
+        {
+          "inputType": "KEYBOARD",
+          "query": "Parler avec Guide de gare"
+        }
+      ]
+    }
+  ],
+  "surface": {
+    "capabilities": [
+      {
+        "name": "actions.capability.ACCOUNT_LINKING"
+      },
+      {
+        "name": "actions.capability.WEB_BROWSER"
+      },
+      {
+        "name": "actions.capability.AUDIO_OUTPUT"
+      },
+      {
+        "name": "actions.capability.MEDIA_RESPONSE_AUDIO"
+      },
+      {
+        "name": "actions.capability.SCREEN_OUTPUT"
+      }
+    ]
+  },
+  "isInSandbox": true,
+  "requestType": "SIMULATOR"
+}

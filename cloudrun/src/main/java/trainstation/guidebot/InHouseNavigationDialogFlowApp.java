@@ -25,18 +25,25 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
 
     private ResourceBundle messages = ResourceBundle.getBundle("messages");
 
+    @ForIntent("Fallback")
+    public ActionResponse fallback(ActionRequest request) {
+        ResourceBundle responses = ResourceBundle.getBundle("responses");
+        String didNotUnderstand = responses.getString("didNotUnderstand");
+
+        return getResponseBuilder(request)
+                .add(didNotUnderstand)
+                .build();
+    }
+
+    @ForIntent("main")
+    public ActionResponse main(ActionRequest request) {
+        return getResponseBuilder(request)
+                .add("Alright. Let's get the test version of Railway station guide.I am a genious. Do you want to know where you are?")
+                .build();
+    }
+
     @ForIntent("Welcome")
     public ActionResponse welcome(ActionRequest request) {
-        /**
-         * agent.add(`Welcome to Genius location!`);
-         *     let conv = agent.conv(); // Get Actions on Google library conv instance
-         *     conv.data.requestedPermission = 'DEVICE_PRECISE_LOCATION';
-         *     conv.ask(new Permission({
-         *             context: 'to locate you',
-         *             permissions: conv.data.requestedPermission,
-         *       }));
-         *     agent.add(conv); // Add Actions on Google library responses to your agent's response
-         */
         ResponseBuilder responseBuilder = getResponseBuilder(request);
         responseBuilder
                 .add(messages.getString("welcome"))

@@ -26,6 +26,7 @@ import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import static java.lang.String.format;
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 /**
@@ -42,6 +43,7 @@ public class DialogFlowFunction extends AllDirectives {
         if (isNotBlank(System.getenv("PORT"))){
             defaultPort = Integer.parseInt(System.getenv("PORT"));
         }
+
         final ActorSystem system = ActorSystem.create();
         final Materializer materializer = ActorMaterializer.create(system);
 
@@ -54,19 +56,15 @@ public class DialogFlowFunction extends AllDirectives {
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(routeFlow,
                 ConnectHttp.toHost("0.0.0.0", defaultPort), materializer);
 
-        //final CompletionStage<ServerBinding> binding = http.bindAndHandle(dialogFlowAgent.handleRequestResponseFlow(),
-        //        ConnectHttp.toHost("localhost", 8080), materializer);
+        System.out.println(format("Type RETURN to exit the server running on {0}", defaultPort));
 
-        System.out.println("Type RETURN to exit");
-        System.in.read();
-
-        binding
-                .exceptionally(failure -> {
+        /*binding.exceptionally(failure -> {
                             System.err.println("Something very bad happened! " + failure.getMessage());
                             system.terminate(); return null;
                 })
+                //.thenAccept(serverBinding -> serverBinding.terminate(Duration.of(4, MINUTES)));
                 .thenCompose(ServerBinding::unbind) // trigger unbinding from the port
-                .thenAccept(unbound -> system.terminate()); // and shutdown when done
+                .thenAccept(unbound -> system.terminate()); // and shutdown when done*/
 
     }
 

@@ -25,7 +25,7 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
 
     private ResourceBundle messages = ResourceBundle.getBundle("messages");
 
-    @ForIntent("Fallback")
+    @ForIntent("Default Fallback Intent")
     public ActionResponse fallback(ActionRequest request) {
         ResourceBundle responses = ResourceBundle.getBundle("responses");
         String didNotUnderstand = responses.getString("didNotUnderstand");
@@ -42,7 +42,7 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
                 .build();
     }
 
-    @ForIntent("Welcome")
+    @ForIntent("welcome")
     public ActionResponse welcome(ActionRequest request) {
         ResponseBuilder responseBuilder = getResponseBuilder(request);
         responseBuilder

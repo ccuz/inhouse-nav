@@ -19,7 +19,7 @@ steps:
 #      --set-env-vars="JAVA_TOOL_OPTIONS=-XX:MaxRAM=256m"
 # see https://cloud.google.com/sdk/gcloud/reference/beta/run/deploy
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['beta', 'run', 'deploy', 'inhouse-webhook', '--image', 'gcr.io/$PROJECT_ID/cloudrunfunction', '--region=${_REGION_NAME}', '--set-env-vars="JAVA_TOOL_OPTIONS=-XX:MaxRAM=256m"']
+  args: ['beta', 'run', 'deploy', 'inhouse-webhook', '--allow-unauthenticated' ,'--image', 'gcr.io/$PROJECT_ID/cloudrunfunction', '--region=${_REGION_NAME}', '--set-env-vars="JAVA_TOOL_OPTIONS=-XX:MaxRAM=256m"']
 
 substitutions:
   #_BUCKET: this-is-my-bucket

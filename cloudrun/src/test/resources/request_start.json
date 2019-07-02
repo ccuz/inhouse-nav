@@ -1,11 +1,11 @@
 {
   "user": {
-    "userId": "ABwppHGJZoqsfTC5EDSHI-A29ns2vCwg_bx1GJqiv8umpgQK9uRjTxTB12SH4cI2zhPOb3kCCNidUio",
-    "locale": "fr-FR",
-    "lastSeen": "2019-05-24T12:15:19Z"
+    "locale": "fr-CA",
+    "lastSeen": "2019-07-02T13:02:50Z",
+    "userVerificationStatus": "VERIFIED"
   },
   "conversation": {
-    "conversationId": "ABwppHFfCfcapAKYB0Vx8gzAiZdUGqdZiKpn1vcul6YXA6y_bCDf0NZLf2aq1cvXyfqXPW1fIZdGoso",
+    "conversationId": "ABwppHG6lu7lClEkrMMB5fohFPWv8pqtK046KA-htOV4wgkOypu9cN_Ds0xXCoHgNchYLUneIuGlXL0",
     "type": "NEW"
   },
   "inputs": [
@@ -25,16 +25,16 @@
         "name": "actions.capability.ACCOUNT_LINKING"
       },
       {
-        "name": "actions.capability.WEB_BROWSER"
-      },
-      {
-        "name": "actions.capability.AUDIO_OUTPUT"
-      },
-      {
         "name": "actions.capability.MEDIA_RESPONSE_AUDIO"
       },
       {
         "name": "actions.capability.SCREEN_OUTPUT"
+      },
+      {
+        "name": "actions.capability.WEB_BROWSER"
+      },
+      {
+        "name": "actions.capability.AUDIO_OUTPUT"
       }
     ]
   },

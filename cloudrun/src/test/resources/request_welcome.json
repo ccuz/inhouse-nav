@@ -26,7 +26,7 @@
     ],
     "intent": {
       "name": "projects/dialogflow-ssml-java/agent/intents/intentId",
-      "displayName": "Welcome"
+      "displayName": "welcome"
     },
     "intentDetectionConfidence": 1,
     "languageCode": "en"

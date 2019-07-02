@@ -1,11 +1,11 @@
 {
-  "fulfillmentText": "Hello there! What's your name?",
+  "fulfillmentText": "Hello, I am your Railway station guide",
   "outputContexts": [
     {
       "lifespanCount": 99,
       "name": "projects/dialogflow-ssml-java/agent/sessions/sessionId/contexts/_actions_on_google",
       "parameters": {
-        "data": "{}"
+        "data": "{\"requestedPermission\":\"DEVICE_PRECISE_LOCATION\"}"
       }
     }
   ],
@@ -16,7 +16,7 @@
         "items": [
           {
             "simpleResponse": {
-              "textToSpeech": "Hello there! What's your name?"
+              "textToSpeech": "Hello, I am your Railway station guide"
             }
           }
         ]
@@ -27,10 +27,9 @@
         "data": {
           "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
           "permissions": [
-            "NAME",
             "DEVICE_PRECISE_LOCATION"
           ],
-          "optContext": "To locate you"
+          "optContext": "to locate you"
         }
       },
       "userStorage": "{\"data\":{}}"

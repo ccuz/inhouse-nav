@@ -35,24 +35,24 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
                 .build();
     }
 
-    @ForIntent("main")
-    public ActionResponse main(ActionRequest request) {
-        return getResponseBuilder(request)
-                .add("Alright. Let's get the test version of Railway station guide.I am a genious. Do you want to know where you are?")
-                .build();
-    }
-
     @ForIntent("welcome")
     public ActionResponse welcome(ActionRequest request) {
         ResponseBuilder responseBuilder = getResponseBuilder(request);
+
+
+        ActionContext actionContext = new ActionContext("projects/dialogflow-ssml-java/agent/sessions/sessionId/contexts/_actions_on_google", 99 );
+        Map<String, Object> actionParameters = new HashMap();
+        actionParameters.put("data", "{\"requestedPermission\":\"DEVICE_PRECISE_LOCATION\"}");
+        actionContext.setParameters(actionParameters);
+
         responseBuilder
                 .add(messages.getString("welcome"))
                 .add(new Permission()
                         .setPermissions(new String[]{
-                                ConstantsKt.PERMISSION_NAME,
                                 ConstantsKt.PERMISSION_DEVICE_PRECISE_LOCATION
                         })
-                        .setContext(messages.getString("toLocateYou")));
+                        .setContext(messages.getString("toLocateYou")))
+                .add(actionContext);
 
         return responseBuilder.build();
     }

@@ -116,12 +116,12 @@ public class DialogFlowFunction extends AllDirectives {
                 //final CompletionStage<Done> res = r..discardEntityBytes(materializer).completionStage();
 
                 return onComplete(() -> response, done -> {
-                    String responseString = done.toString();
+                    String responseString = done.get();
                     LOGGER.debug("response: " + responseString);
                     // we only want to respond once the incoming data has been handled:
-                    //HttpEntity.Strict entity = HttpEntities.create(ContentTypes.APPLICATION_JSON, responseString);
-                    //HttpResponse httpResponse = HttpResponse.create().withEntity(entity);
-                    return complete(responseString);
+                    HttpEntity.Strict entity = HttpEntities.create(ContentTypes.APPLICATION_JSON, responseString);
+                    HttpResponse httpResponse = HttpResponse.create().withEntity(entity);
+                    return complete(httpResponse);
                 });
             });
     }

@@ -119,9 +119,9 @@ public class DialogFlowFunction extends AllDirectives {
                     String responseString = done.toString();
                     LOGGER.debug("response: " + responseString);
                     // we only want to respond once the incoming data has been handled:
-                    HttpEntity.Strict entity = HttpEntities.create(ContentTypes.APPLICATION_JSON, responseString);
-                    HttpResponse httpResponse = HttpResponse.create().withEntity(entity);
-                    return complete(httpResponse);
+                    //HttpEntity.Strict entity = HttpEntities.create(ContentTypes.APPLICATION_JSON, responseString);
+                    //HttpResponse httpResponse = HttpResponse.create().withEntity(entity);
+                    return complete(responseString);
                 });
             });
     }

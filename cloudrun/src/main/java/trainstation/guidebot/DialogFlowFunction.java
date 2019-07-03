@@ -5,9 +5,7 @@ import akka.actor.ActorSystem;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
-import akka.http.javadsl.model.HttpHeader;
-import akka.http.javadsl.model.HttpRequest;
-import akka.http.javadsl.model.HttpResponse;
+import akka.http.javadsl.model.*;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
 import akka.http.javadsl.unmarshalling.Unmarshaller;
@@ -121,7 +119,9 @@ public class DialogFlowFunction extends AllDirectives {
                     String responseString = done.toString();
                     LOGGER.debug("response: " + responseString);
                     // we only want to respond once the incoming data has been handled:
-                    return complete(responseString);
+                    HttpEntity.Strict entity = HttpEntities.create(ContentTypes.APPLICATION_JSON, responseString);
+                    HttpResponse httpResponse = HttpResponse.create().withEntity(entity);
+                    return complete(httpResponse);
                 });
             });
     }

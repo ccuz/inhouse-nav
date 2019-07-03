@@ -1,38 +1,96 @@
 {
-  "responseId": "responseId",
+  "responseId": "1e04f123-6456-4170-a8a2-6c4b2d77bb6b-68e175c7",
   "queryResult": {
-    "queryText": "",
+    "queryText": "GOOGLE_ASSISTANT_WELCOME",
     "action": "input.welcome",
     "parameters": {},
     "allRequiredParamsPresent": true,
-    "fulfillmentText": "Sorry, I couldn't get a response for the Welcome intent from your webhook.",
+    "fulfillmentText": "I am a genious. Do you want to know where you are?",
     "fulfillmentMessages": [
       {
         "text": {
           "text": [
-            "Sorry, I couldn't get a response for the Welcome intent from your webhook."
+            "I am a genious. Do you want to know where you are?"
           ]
         }
       }
     ],
     "outputContexts": [
       {
-        "name": "projects/dialogflow-ssml-java/agent/sessions/sessionId/contexts/_actions_on_google",
-        "lifespanCount": 98,
-        "parameters": {
-          "data": "{}"
-        }
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_capability_media_response_audio"
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_capability_audio_output"
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_capability_web_browser"
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_capability_screen_output"
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_capability_account_linking"
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/google_assistant_input_type_keyboard"
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/google_assistant_welcome"
       }
     ],
     "intent": {
-      "name": "projects/dialogflow-ssml-java/agent/intents/intentId",
+      "name": "projects/inhouse-nav/agent/intents/b54cc381-0a50-4c14-9a33-54d420d0178d",
       "displayName": "welcome"
     },
-    "intentDetectionConfidence": 1,
+    "intentDetectionConfidence": 1.0,
     "languageCode": "en"
   },
   "originalDetectIntentRequest": {
-    "payload": {}
+    "source": "google",
+    "version": "2",
+    "payload": {
+      "user": {
+        "locale": "en-US",
+        "lastSeen": "2019-07-03T05:51:08Z",
+        "userVerificationStatus": "VERIFIED"
+      },
+      "conversation": {
+        "conversationId": "sessionId",
+        "type": "NEW"
+      },
+      "inputs": [
+        {
+          "intent": "actions.intent.MAIN",
+          "rawInputs": [
+            {
+              "inputType": "KEYBOARD",
+              "query": "Talk to Railway station guide"
+            }
+          ]
+        }
+      ],
+      "surface": {
+        "capabilities": [
+          {
+            "name": "actions.capability.MEDIA_RESPONSE_AUDIO"
+          },
+          {
+            "name": "actions.capability.AUDIO_OUTPUT"
+          },
+          {
+            "name": "actions.capability.WEB_BROWSER"
+          },
+          {
+            "name": "actions.capability.SCREEN_OUTPUT"
+          },
+          {
+            "name": "actions.capability.ACCOUNT_LINKING"
+          }
+        ]
+      },
+      "isInSandbox": true,
+      "requestType": "SIMULATOR"
+    }
   },
-  "session": "projects/dialogflow-ssml-java/agent/sessions/sessionId"
+  "session": "projects/inhouse-nav/agent/sessions/sessionId"
 }

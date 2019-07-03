@@ -2,7 +2,7 @@
   "outputContexts": [
     {
       "lifespanCount": 99,
-      "name": "projects/dialogflow-ssml-java/agent/sessions/sessionId/contexts/_actions_on_google",
+      "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/_actions_on_google",
       "parameters": {
         "data": "{\"requestedPermission\":\"DEVICE_PRECISE_LOCATION\"}"
       }

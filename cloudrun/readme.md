@@ -45,3 +45,8 @@ with the test body json.
 
 You can also use https://ngrok.com/ to debug calls against your local service by registering your dialogflow webhook url 
 as configured in ngrok.
+
+To test the docker image of the cloudrun function
+- gradle build
+- docker build -f Dockerfile.graalvm ./
+- docker run yourDockerImageId

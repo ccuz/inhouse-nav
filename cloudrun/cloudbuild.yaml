@@ -10,7 +10,7 @@ steps:
   dir: 'cloudrun'
 # Build gcp cloudrun image with the fulfillment java server
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/$PROJECT_ID/cloudrunfunction', '-f', 'Dockerfile.openjdk', './']
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/cloudrunfunction', '-f', 'Dockerfile.graalvm', './']
   dir: 'cloudrun'
 # Push to private registry
 - name: 'gcr.io/cloud-builders/docker'

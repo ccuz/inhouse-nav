@@ -1,5 +1,4 @@
 {
-  "fulfillmentText": "Hello, I am your Railway station guide",
   "outputContexts": [
     {
       "lifespanCount": 99,
@@ -12,15 +11,6 @@
   "payload": {
     "google": {
       "expectUserResponse": true,
-      "richResponse": {
-        "items": [
-          {
-            "simpleResponse": {
-              "textToSpeech": "Hello, I am your Railway station guide"
-            }
-          }
-        ]
-      },
       "isSsml": false,
       "systemIntent": {
         "intent": "actions.intent.PERMISSION",

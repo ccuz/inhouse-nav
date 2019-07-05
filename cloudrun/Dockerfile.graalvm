@@ -3,17 +3,27 @@
 # and https://github.com/vmencik/akka-graal-native for akka and graal-native
 FROM oracle/graalvm-ce:1.0.0-rc16 as graalvm
 COPY build/libs/cloudrun-all.jar /home/app/server.jar
-COPY cloudrun-graalvm-resource-config.json /home/app/resource-config.json
+RUN mkdir -p /home/app/graalvmconfig
+COPY graalvmconfig/resource-config.json /home/app/graalvmconfig/resource-config.json
+COPY graalvmconfig/reflection-config.json /home/app/graalvmconfig/reflection-config.json
+#COPY graalvmconfig/proxy-config.json /home/app/graalvmconfig/proxy-config.json
+#COPY graalvmconfig/jni-config.json /home/app/graalvmconfig/jni-config.json
 WORKDIR /home/app
 # use --static to statically link glibc to prevent having to use custom alpine image with glibc
 # use --report-unsupported-elements-at-runtime to detect unsupported
 # use -H:ReflectionConfigurationResources=akka_reflection_config.json to declare reflection classes and method calls
-#RUN native-image --no-server --static --report-unsupported-elements-at-runtime --delay-class-initialization-to-runtime=trainstation.guidebot.DialogFlowFunction -cp server.jar  -H:+ReportExceptionStackTraces -H:IncludeResources=./resource-config.json -H:Class=trainstation.guidebot.DialogFlowFunction -H:Name=dialogflow-cloudrun-native
-RUN native-image --no-server --static -cp server.jar -H:IncludeResources="(.*.conf)|(static/.*)|(META-INF/mime.types)" -H:Class=trainstation.guidebot.DialogFlowFunction -H:Name=dialogflow-cloudrun-native
+#
+#RUN native-image --no-server --static --report-unsupported-elements-at-runtime --delay-class-initialization-to-runtime=trainstation.guidebot.DialogFlowFunction -cp server.jar  -H:+ReportExceptionStackTraces -H:IncludeResources=./resourceconfig.json -H:Class=trainstation.guidebot.DialogFlowFunction -H:Name=dialogflow-cloudrun-native
+RUN native-image --no-server --static -cp server.jar \
+-H:+ReportExceptionStackTraces \
+-H:ConfigurationFileDirectories=graalvmconfig/ \
+--allow-incomplete-classpath \
+-H:Class=trainstation.guidebot.DialogFlowFunction -H:Name=dialogflow-cloudrun-native
 
 
 # Stage 3: Prepare Server
 FROM alpine:latest
+RUN apk --no-cache add ca-certificates
 EXPOSE 8080
 COPY --from=graalvm /home/app/dialogflow-cloudrun-native .
 ENTRYPOINT ["./dialogflow-cloudrun-native"]

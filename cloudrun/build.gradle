@@ -16,6 +16,7 @@ ext {
     scalaVersion = "2.12"
     akkaVersion = "2.5.23"
     akkaHttpVersion = "10.1.+"
+    //graalAkkaVersion = "0.4.1"
 }
 
 dependencies {
@@ -27,6 +28,12 @@ dependencies {
     compile group: 'com.google.actions', name: 'actions-on-google', version: '1.+'
 
     compile 'ch.qos.logback:logback-classic:1.2.3'
+
+    //compile "com.typesafe.scala-logging:scala-logging_${scalaVersion}:3.9.2"
+    //compile "org.slf4j:slf4j-jdk14:1.7.26" // java.util.logging works mostly out-of-the-box with SubstrateVM
+
+    //compile "com.github.vmencik:graal-akka-http:${akkaVersion}"
+    //compile "com.github.vmencik:graal-akka-slf4j:${akkaVersion}"
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile("org.assertj:assertj-core:3.11.1")

@@ -48,5 +48,19 @@ as configured in ngrok.
 
 To test the docker image of the cloudrun function
 - gradle build
-- docker build -f Dockerfile.graalvm ./
-- docker run yourDockerImageId
+
+  ## Using openjdk
+  - docker build -t cloudrun-openjdk -f Dockerfile.openjdk ./
+  - docker run -it -p 8080:8080 cloudrun-openjdk
+
+  ## Using graalvm
+  - docker build -t cloudrun-graalvm -f Dockerfile.graalvm ./
+  - docker run -it -p 8080:8080 cloudrun-graalvm
+
+#GraalVM native-image
+In order to generate the config and reflection files necessary for GraalVM native-image (see https://github.com/oracle/graal/blob/master/substratevm/CONFIGURE.md)
+- Run "docker build -t cloudrun-graalvm-agentlib -f Dockerfile.graalvm_agentlib ./" to build a docker image with GraalVM profiling
+- Run "docker run -it -v /${PWD}/graalvmconfig:/native-image-config -p 8080:8080 cloudrun-graalvm-agentlib" to start the service with profiling
+- Use REST client to "POST http://localhost:8080/" your test payloads.
+- Inspect the "cloudrun/graalvm" directory for the generated config and reflection files
+- Build the GraalVM service using "docker build -t cloudrun-graalvm -f Dockerfile.graalvm ./"

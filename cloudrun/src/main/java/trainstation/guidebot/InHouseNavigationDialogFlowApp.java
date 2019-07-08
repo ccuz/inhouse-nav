@@ -78,24 +78,29 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
         ResponseBuilder responseBuilder = getResponseBuilder(request);
 
         Location location = request.getDevice().getLocation();
-        if (location != null && isNotBlank(location.getCity())){
-            final String city = location.getCity();
+        if (location != null){
+            if (isNotBlank(location.getCity())) {
+                final String city = location.getCity();
 
-            Context locationContext = new Context();
-            locationContext.setLifespanCount(5);
-            HashMap params = new HashMap();
-            params.put("location", city);
-            locationContext.setParameters(params);
-            locationContext.setName("locationContext");
+                Context locationContext = new Context();
+                locationContext.setLifespanCount(5);
+                HashMap params = new HashMap();
+                params.put("location", city);
+                locationContext.setParameters(params);
+                locationContext.setName("locationContext");
 
-            WebhookResponse response = new WebhookResponse();
-            List outputContexts = new ArrayList<>();
-            outputContexts.add(locationContext);
-            response.setOutputContexts(outputContexts);
+                WebhookResponse response = new WebhookResponse();
+                List outputContexts = new ArrayList<>();
+                outputContexts.add(locationContext);
+                response.setOutputContexts(outputContexts);
 
-            final String locationString = format(messages.getString("youAreAt"), city);
-            responseBuilder.add(locationString);
-            responseBuilder = responseBuilder.use(response);
+                final String locationString = format(messages.getString("youAreAt"), city);
+                responseBuilder.add(locationString);
+                responseBuilder = responseBuilder.use(response);
+            } else {
+                responseBuilder
+                        .add("Sorry, I could not figure out the city where you are.");
+            }
         } else {
             responseBuilder
                     .add("Sorry, I could not figure out where you are.");

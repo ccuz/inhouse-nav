@@ -29,9 +29,6 @@ dependencies {
 
     compile 'ch.qos.logback:logback-classic:1.2.3'
 
-    //compile "com.typesafe.scala-logging:scala-logging_${scalaVersion}:3.9.2"
-    //compile "org.slf4j:slf4j-jdk14:1.7.26" // java.util.logging works mostly out-of-the-box with SubstrateVM
-
     // required for substitutions. Make sure the version matches GraalVM version used to run native-image !
     compileOnly "com.oracle.substratevm:svm:19.1.0"
 

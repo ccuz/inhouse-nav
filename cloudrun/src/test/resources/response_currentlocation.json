@@ -1,16 +1,15 @@
 {
-  "fulfillmentText": "You are at $Bern. On which platform do your train leaves?",
   "outputContexts": [
     {
       "lifespanCount": 5,
-      "name": "locationContext",
+      "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/locationContext",
       "parameters": {
         "location": "Bern"
       }
     },
     {
       "lifespanCount": 99,
-      "name": "projects/inhouse-nav/agent/sessions/sessionIdk/contexts/_actions_on_google",
+      "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/_actions_on_google",
       "parameters": {
         "data": "{\"requestedPermission\":\"DEVICE_PRECISE_LOCATION\"}"
       }
@@ -23,7 +22,7 @@
         "items": [
           {
             "simpleResponse": {
-              "textToSpeech": "You are at $Bern. On which platform do your train leaves?"
+              "textToSpeech": "You are at Bern. On which platform do your train leaves?"
             }
           }
         ]

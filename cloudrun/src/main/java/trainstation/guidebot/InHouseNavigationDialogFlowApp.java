@@ -4,6 +4,7 @@ import com.google.actions.api.*;
 import com.google.actions.api.response.ResponseBuilder;
 import com.google.actions.api.response.helperintent.Permission;
 import com.google.api.services.actions_fulfillment.v2.model.Location;
+import com.google.api.services.actions_fulfillment.v2.model.SimpleResponse;
 import com.google.api.services.dialogflow_fulfillment.v2.model.Context;
 import com.google.api.services.dialogflow_fulfillment.v2.model.WebhookResponse;
 import org.slf4j.Logger;
@@ -77,25 +78,29 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
          */
         ResponseBuilder responseBuilder = getResponseBuilder(request);
 
+
         Location location = request.getDevice().getLocation();
         if (location != null){
             if (isNotBlank(location.getCity())) {
                 final String city = location.getCity();
+                final String locationString = format(messages.getString("youAreAt"), city);
+
+                SimpleResponse textToSpeachResponse = new SimpleResponse();
+                textToSpeachResponse.setTextToSpeech(locationString);
 
                 Context locationContext = new Context();
                 locationContext.setLifespanCount(5);
                 HashMap params = new HashMap();
                 params.put("location", city);
                 locationContext.setParameters(params);
-                locationContext.setName("locationContext");
+                locationContext.setName(request.getSessionId()+"/contexts/locationContext");
 
                 WebhookResponse response = new WebhookResponse();
                 List outputContexts = new ArrayList<>();
                 outputContexts.add(locationContext);
                 response.setOutputContexts(outputContexts);
 
-                final String locationString = format(messages.getString("youAreAt"), city);
-                responseBuilder.add(locationString);
+                responseBuilder.add(textToSpeachResponse);
                 responseBuilder = responseBuilder.use(response);
             } else {
                 responseBuilder

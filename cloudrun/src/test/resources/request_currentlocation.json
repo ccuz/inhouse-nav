@@ -1,5 +1,5 @@
 {
-  "responseId": "329c4f43-65da-4672-abd5-d2d4c7b9e404",
+  "responseId": "8571a316-e314-4458-b507-f295b30518a7-68e175c7",
   "queryResult": {
     "queryText": "actions_intent_PERMISSION",
     "action": "current_location",
@@ -17,118 +17,118 @@
     ],
     "outputContexts": [
       {
-        "name": "projects/inhouse-nav/agent/sessions/sessionIdk/contexts/actions_capability_screen_output"
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_capability_screen_output"
       },
       {
-        "name": "projects/inhouse-nav/agent/sessions/sessionIdk/contexts/actions_intent_permission",
-        "parameters": {
-          "PERMISSION": true,
-          "text": "yes"
-        }
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_capability_web_browser"
       },
       {
-        "name": "projects/inhouse-nav/agent/sessions/sessionIdk/contexts/_actions_on_google",
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_capability_audio_output"
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_capability_media_response_audio"
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_capability_account_linking"
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/google_assistant_input_type_keyboard"
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/_actions_on_google",
         "lifespanCount": 98,
         "parameters": {
           "data": "{\"requestedPermission\":\"DEVICE_PRECISE_LOCATION\"}"
         }
       },
       {
-        "name": "projects/inhouse-nav/agent/sessions/sessionIdk/contexts/actions_capability_audio_output"
-      },
-      {
-        "name": "projects/inhouse-nav/agent/sessions/sessionIdk/contexts/actions_capability_account_linking"
-      },
-      {
-        "name": "projects/inhouse-nav/agent/sessions/sessionIdk/contexts/google_assistant_input_type_keyboard"
-      },
-      {
-        "name": "projects/inhouse-nav/agent/sessions/sessionIdk/contexts/actions_capability_media_response_audio"
-      },
-      {
-        "name": "projects/inhouse-nav/agent/sessions/sessionIdk/contexts/actions_capability_web_browser"
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_intent_permission",
+        "parameters": {
+          "PERMISSION": true,
+          "text": "yes"
+        }
       }
     ],
     "intent": {
-      "name": "projects/inhouse-nav/agent/intents/myIntentIdq726",
+      "name": "projects/inhouse-nav/agent/intents/6db5bb3e-5338-4632-ba57-74d86483cebd",
       "displayName": "current_location"
     },
     "intentDetectionConfidence": 1,
-    "languageCode": "en-us"
+    "languageCode": "en"
   },
   "originalDetectIntentRequest": {
     "source": "google",
     "version": "2",
     "payload": {
-      "isInSandbox": true,
+      "user": {
+        "permissions": [
+          "DEVICE_PRECISE_LOCATION"
+        ],
+        "locale": "en-US",
+        "lastSeen": "2019-07-08T06:28:14Z",
+        "userVerificationStatus": "VERIFIED"
+      },
+      "conversation": {
+        "conversationId": "sessionId",
+        "type": "ACTIVE",
+        "conversationToken": "[\"_actions_on_google\"]"
+      },
+      "inputs": [
+        {
+          "intent": "actions.intent.PERMISSION",
+          "rawInputs": [
+            {
+              "inputType": "KEYBOARD",
+              "query": "yes"
+            }
+          ],
+          "arguments": [
+            {
+              "name": "PERMISSION",
+              "boolValue": true,
+              "textValue": "true"
+            },
+            {
+              "name": "text",
+              "rawText": "yes",
+              "textValue": "yes"
+            }
+          ]
+        }
+      ],
       "surface": {
         "capabilities": [
           {
-            "name": "actions.capability.AUDIO_OUTPUT"
+            "name": "actions.capability.SCREEN_OUTPUT"
           },
           {
             "name": "actions.capability.WEB_BROWSER"
           },
           {
-            "name": "actions.capability.SCREEN_OUTPUT"
-          },
-          {
-            "name": "actions.capability.ACCOUNT_LINKING"
+            "name": "actions.capability.AUDIO_OUTPUT"
           },
           {
             "name": "actions.capability.MEDIA_RESPONSE_AUDIO"
+          },
+          {
+            "name": "actions.capability.ACCOUNT_LINKING"
           }
         ]
       },
-      "requestType": "SIMULATOR",
-      "inputs": [
-        {
-          "rawInputs": [
-            {
-              "query": "yes",
-              "inputType": "KEYBOARD"
-            }
-          ],
-          "arguments": [
-            {
-              "textValue": "true",
-              "name": "PERMISSION",
-              "boolValue": true
-            },
-            {
-              "rawText": "yes",
-              "textValue": "yes",
-              "name": "text"
-            }
-          ],
-          "intent": "actions.intent.PERMISSION"
-        }
-      ],
-      "user": {
-        "lastSeen": "2019-05-23T13:01:46Z",
-        "permissions": [
-          "DEVICE_PRECISE_LOCATION"
-        ],
-        "locale": "en-US",
-        "userId": "aFUserId"
-      },
       "device": {
         "location": {
-          "zipCode": "3011",
-          "formattedAddress": "Fahrschule Bern Zytglogge, Bern, 3011",
-          "city": "Bern",
           "coordinates": {
             "latitude": 46.9479739,
             "longitude": 7.4474466999999995
-          }
+          },
+          "formattedAddress": "Lyon, Francia Kornhausplatz 2, Bern, 3011",
+          "zipCode": "3011",
+          "city": "Bern"
         }
       },
-      "conversation": {
-        "conversationId": "sessionIdk",
-        "type": "ACTIVE",
-        "conversationToken": "[\"_actions_on_google\"]"
-      }
+      "isInSandbox": true,
+      "requestType": "SIMULATOR"
     }
   },
-  "session": "projects/inhouse-nav/agent/sessions/sessionIdk"
+  "session": "projects/inhouse-nav/agent/sessions/sessionId"
 }

@@ -10,8 +10,8 @@ ENV PORT=8080
 EXPOSE 8080
 
 # Run the web service on container startup using graalvm agentlib (see https://github.com/oracle/graal/blob/master/substratevm/CONFIGURE.md)
-#CMD ["java","-agentlib:native-image-agent=config-merge-dir=/native-image-config","-Djava.security.egd=file:/dev/./urandom","-Dserver.port=${PORT}","-jar","/dialogflow-cloudrun.jar"]
+CMD ["java","-agentlib:native-image-agent=config-merge-dir=/native-image-config","-Djava.security.egd=file:/dev/./urandom","-Dserver.port=${PORT}","-jar","/dialogflow-cloudrun.jar"]
 
 # Run using traces
 # Use native-image-configure generate --trace-input=/path/to/trace-file.json --output-dir=/path/to/config-dir/ to transform traces to config files
-CMD ["java","-agentlib:native-image-agent=trace-output=/native-image-config/trace-output.json","-Djava.security.egd=file:/dev/./urandom","-Dserver.port=${PORT}","-jar","/dialogflow-cloudrun.jar"]
+#CMD ["java","-agentlib:native-image-agent=trace-output=/native-image-config/trace-output.json","-Djava.security.egd=file:/dev/./urandom","-Dserver.port=${PORT}","-jar","/dialogflow-cloudrun.jar"]

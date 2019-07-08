@@ -13,7 +13,7 @@ repositories {
 }
 
 ext {
-    scalaVersion = "2.12"
+    scalaVersion = "2.13"
     akkaVersion = "2.5.23"
     akkaHttpVersion = "10.1.+"
     //graalAkkaVersion = "0.4.1"

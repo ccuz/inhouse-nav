@@ -1,9 +1,11 @@
 {
-  "resources": [
-    {"pattern": "(.*.properties)"},
-    {"pattern": "(.*.conf)"},
-    {"pattern": "(.*.json)"},
-    {"pattern": "static/.*"},
-    {"pattern": "META-INF/mime.types"}
+  "resources":[
+    {"pattern":"META-INF/MANIFEST.MF"}, 
+    {"pattern":"akka-http-version.conf"}, 
+    {"pattern":"messages.properties"}, 
+    {"pattern":"messages_en_US.properties"}, 
+    {"pattern":"org/slf4j/impl/StaticLoggerBinder.class"}, 
+    {"pattern":"reference.conf"}, 
+    {"pattern":"version.conf"}
   ]
 }

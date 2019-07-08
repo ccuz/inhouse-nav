@@ -5,7 +5,7 @@ FROM oracle/graalvm-ce:1.0.0-rc16 as graalvm
 COPY build/libs/cloudrun-all.jar /home/app/server.jar
 RUN mkdir -p /home/app/graalvmconfig
 COPY graalvmconfig/resource-config.json /home/app/graalvmconfig/resource-config.json
-COPY graalvmconfig/reflection-config.json /home/app/graalvmconfig/reflection-config.json
+COPY graalvmconfig/reflect-config.json /home/app/graalvmconfig/reflect-config.json
 #COPY graalvmconfig/proxy-config.json /home/app/graalvmconfig/proxy-config.json
 #COPY graalvmconfig/jni-config.json /home/app/graalvmconfig/jni-config.json
 WORKDIR /home/app
@@ -18,6 +18,9 @@ RUN native-image --no-server --static -cp server.jar \
 -H:+ReportExceptionStackTraces \
 -H:ConfigurationFileDirectories=graalvmconfig/ \
 --allow-incomplete-classpath \
+#--initialize-at-build-time \
+--delay-class-initialization-to-runtime="com.typesafe.config.impl.ConfigImpl$EnvVariablesHolder, com.typesafe.config.impl.ConfigImpl$SystemPropertiesHolder" \
+--no-fallback --report-unsupported-elements-at-runtime \
 -H:Class=trainstation.guidebot.DialogFlowFunction -H:Name=dialogflow-cloudrun-native
 
 

@@ -118,10 +118,7 @@
 },
 {
   "name":"akka.event.DeadLetterListener",
-  "methods":[
-    {"name":"<init>","parameterTypes":[] }, 
-    {"name":"<init>","parameterTypes":[] }
-  ]
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"akka.event.DefaultLoggingFilter",
@@ -140,17 +137,11 @@
 },
 {
   "name":"akka.event.Logging$DefaultLogger",
-  "methods":[
-    {"name":"<init>","parameterTypes":[] }, 
-    {"name":"<init>","parameterTypes":[] }
-  ]
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"akka.http.impl.engine.client.PoolMasterActor",
-  "methods":[
-    {"name":"<init>","parameterTypes":[] }, 
-    {"name":"<init>","parameterTypes":[] }
-  ]
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"akka.io.SelectionHandler",
@@ -285,10 +276,7 @@
 {
   "name":"com.google.api.services.dialogflow_fulfillment.v2.model.Context",
   "allDeclaredFields":true,
-  "methods":[
-    {"name":"<init>","parameterTypes":[] }, 
-    {"name":"<init>","parameterTypes":[] }
-  ]
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"com.google.api.services.dialogflow_fulfillment.v2.model.Intent",

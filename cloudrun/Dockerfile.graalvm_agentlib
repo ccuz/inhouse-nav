@@ -1,7 +1,8 @@
 # Use Graalvm and agentlib to profile your app
 # see https://github.com/oracle/graal/blob/master/substratevm/CONFIGURE.md
-FROM oracle/graalvm-ce:1.0.0-rc16
+FROM oracle/graalvm-ce:19.1.0
 
+RUN gu install native-image
 #Copy the gradle jar into docker image
 ADD build/libs/cloudrun-all.jar /dialogflow-cloudrun.jar
 RUN mkdir -p /native-image-config

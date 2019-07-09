@@ -11,6 +11,8 @@ Create a new Dialogflow agent by importing the 'src/main/dialogflow/inhouse-nav-
 - In Dialogflow, configure the agent 'Fulfillment' webhook URL to point on the Cloudrun function endpoint (i.e. https://{cloudrun-service-id}.a.run.app)
 - Within the Dialogflow console, click on 'See how it works in Google Assistant' to debug within the simulator
 
+You can find official example on https://developers.google.com/actions/samples/github
+
 
 ## Deploy the docker-function on gcp 'Cloud run'
 

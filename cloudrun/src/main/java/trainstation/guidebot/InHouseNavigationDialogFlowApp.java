@@ -105,11 +105,11 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
                 responseBuilder = responseBuilder.use(response);
             } else {
                 responseBuilder
-                        .add("Sorry, I could not figure out the city where you are.");
+                        .add(format(messages.getString("cannotLocateYourCity")));
             }
         } else {
             responseBuilder
-                    .add("Sorry, I could not figure out where you are.");
+                    .add(format(messages.getString("cannotLocateYou")));
         }
 
         return responseBuilder.build();
@@ -137,7 +137,7 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
 
 
         String destination = (String) request.getParameter("destination");
-        String mockedRoutingServiceResponse = format("Turn left, go stairs up, pass in front of Brezelkoenig, continue walking till platform {0}, stairs-up", destination);
+        String mockedRoutingServiceResponse = format(messages.getString("mockedRoute"), destination);
 
         SimpleResponse textToSpeachResponse = new SimpleResponse();
         textToSpeachResponse.setTextToSpeech(mockedRoutingServiceResponse);

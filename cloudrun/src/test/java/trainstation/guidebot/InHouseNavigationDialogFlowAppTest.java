@@ -71,4 +71,9 @@ public class InHouseNavigationDialogFlowAppTest {
     assertCorrectResponse("currentlocation");
   }
 
+  @Test
+  public void testRouting() throws Exception {
+    assertCorrectResponse("routing");
+  }
+
 }

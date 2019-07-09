@@ -1,0 +1,174 @@
+{
+  "responseId": "3d532fee-6554-417e-95c9-770db7a0ba2b-68e175c7",
+  "queryResult": {
+    "queryText": "platform 12a",
+    "parameters": {
+      "destination": "12a",
+      "location": ""
+    },
+    "allRequiredParamsPresent": true,
+    "fulfillmentText": "I am searching the best route to 12a",
+    "fulfillmentMessages": [
+      {
+        "text": {
+          "text": [
+            "I am searching the best route to 12a"
+          ]
+        }
+      }
+    ],
+    "outputContexts": [
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/locationcontext",
+        "lifespanCount": 5,
+        "parameters": {
+          "location": "",
+          "destination": "12a",
+          "destination.original": "12a",
+          "location.original": ""
+        }
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_capability_account_linking",
+        "parameters": {
+          "destination": "12a",
+          "destination.original": "12a",
+          "location": "",
+          "location.original": ""
+        }
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_capability_audio_output",
+        "parameters": {
+          "destination": "12a",
+          "destination.original": "12a",
+          "location": "",
+          "location.original": ""
+        }
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_capability_web_browser",
+        "parameters": {
+          "destination": "12a",
+          "destination.original": "12a",
+          "location": "",
+          "location.original": ""
+        }
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_capability_screen_output",
+        "parameters": {
+          "destination": "12a",
+          "destination.original": "12a",
+          "location": "",
+          "location.original": ""
+        }
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/actions_capability_media_response_audio",
+        "parameters": {
+          "destination": "12a",
+          "destination.original": "12a",
+          "location": "",
+          "location.original": ""
+        }
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/google_assistant_input_type_keyboard",
+        "parameters": {
+          "destination": "12a",
+          "destination.original": "12a",
+          "location": "",
+          "location.original": ""
+        }
+      },
+      {
+        "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/_actions_on_google",
+        "lifespanCount": 97,
+        "parameters": {
+          "data": "{\"requestedPermission\":\"DEVICE_PRECISE_LOCATION\"}",
+          "destination": "12a",
+          "destination.original": "12a",
+          "location": "",
+          "location.original": ""
+        }
+      }
+    ],
+    "intent": {
+      "name": "projects/inhouse-nav/agent/intents/6641cc18-b7a4-4847-af1d-78acc19dd9e6",
+      "displayName": "destination"
+    },
+    "intentDetectionConfidence": 0.7107612,
+    "languageCode": "en"
+  },
+  "originalDetectIntentRequest": {
+    "source": "google",
+    "version": "2",
+    "payload": {
+      "user": {
+        "permissions": [
+          "DEVICE_PRECISE_LOCATION"
+        ],
+        "locale": "en-US",
+        "lastSeen": "2019-07-08T15:29:20Z",
+        "userVerificationStatus": "VERIFIED"
+      },
+      "conversation": {
+        "conversationId": "sessionId",
+        "type": "ACTIVE",
+        "conversationToken": "[\"locationcontext\",\"_actions_on_google\"]"
+      },
+      "inputs": [
+        {
+          "intent": "actions.intent.TEXT",
+          "rawInputs": [
+            {
+              "inputType": "KEYBOARD",
+              "query": "platform 12a"
+            }
+          ],
+          "arguments": [
+            {
+              "name": "text",
+              "rawText": "platform 12a",
+              "textValue": "platform 12a"
+            }
+          ]
+        }
+      ],
+      "surface": {
+        "capabilities": [
+          {
+            "name": "actions.capability.ACCOUNT_LINKING"
+          },
+          {
+            "name": "actions.capability.AUDIO_OUTPUT"
+          },
+          {
+            "name": "actions.capability.WEB_BROWSER"
+          },
+          {
+            "name": "actions.capability.SCREEN_OUTPUT"
+          },
+          {
+            "name": "actions.capability.MEDIA_RESPONSE_AUDIO"
+          }
+        ]
+      },
+      "device": {
+        "location": {
+          "coordinates": {
+            "latitude": 46.9479739,
+            "longitude": 7.4474466999999995
+          },
+          "formattedAddress": "Lyon, Francia Kornhausplatz 2, Bern, 3011",
+          "zipCode": "3011",
+          "city": "Bern"
+        }
+      },
+      "isInSandbox": true,
+      "requestType": "SIMULATOR"
+    }
+  },
+  "session": "projects/inhouse-nav/agent/sessions/sessionId"
+}

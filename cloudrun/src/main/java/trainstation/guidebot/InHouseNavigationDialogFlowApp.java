@@ -7,6 +7,7 @@ import com.google.api.services.actions_fulfillment.v2.model.Location;
 import com.google.api.services.actions_fulfillment.v2.model.SimpleResponse;
 import com.google.api.services.dialogflow_fulfillment.v2.model.Context;
 import com.google.api.services.dialogflow_fulfillment.v2.model.WebhookResponse;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,7 +94,7 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
                 HashMap params = new HashMap();
                 params.put("location", city);
                 locationContext.setParameters(params);
-                locationContext.setName(request.getSessionId()+"/contexts/locationContext");
+                locationContext.setName(createContextName(request, "locationContext"));
 
                 WebhookResponse response = new WebhookResponse();
                 List outputContexts = new ArrayList<>();
@@ -113,6 +114,8 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
 
         return responseBuilder.build();
     }
+
+
 
     @ForIntent("destination")
     public ActionResponse routing(ActionRequest request) throws IOException {
@@ -134,15 +137,17 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
 
 
         String destination = (String) request.getParameter("destination");
+        String mockedRoutingServiceResponse = format("Turn left, go stairs up, pass in front of Brezelkoenig, continue walking till platform {0}, stairs-up", destination);
 
-        String mockedResponse = format("Turn left, go stairs up, pass in front of Brezelkoenig, continue walking till platform ${0}, stairs-up", destination);
+        SimpleResponse textToSpeachResponse = new SimpleResponse();
+        textToSpeachResponse.setTextToSpeech(mockedRoutingServiceResponse);
 
         Context routingContext = new Context();
         routingContext.setLifespanCount(5);
         HashMap params = new HashMap();
-        params.put("route", mockedResponse);
+        params.put("route", mockedRoutingServiceResponse);
         routingContext.setParameters(params);
-        routingContext.setName("route");
+        routingContext.setName(createContextName(request, "route"));
 
         WebhookResponse response = new WebhookResponse();
         List outputContexts = new ArrayList<>();
@@ -150,14 +155,19 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
         response.setOutputContexts(outputContexts);
 
         ResponseBuilder responseBuilder = getResponseBuilder(request);
-        responseBuilder.add(mockedResponse);
+        responseBuilder.add(textToSpeachResponse);
         responseBuilder.use(response);
 
         return responseBuilder.build();
     }
 
+    @NotNull
+    private String createContextName(ActionRequest request, String name) {
+        return request.getSessionId() + "/contexts/" + name;
+    }
+
     private Optional<String> getParameterFromContext(String paramName, String contextName, ActionRequest request) {
-        ActionContext context = request.getContext(request.getSessionId() + "/contexts/" + contextName);
+        ActionContext context = request.getContext(createContextName(request, contextName));
 
         if (context == null || context.getParameters() == null || ((String) context.getParameters().get(paramName)).isEmpty()) {
             return Optional.empty();

@@ -1,0 +1,38 @@
+{
+  "outputContexts": [
+    {
+      "lifespanCount": 5,
+      "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/route",
+      "parameters": {
+        "route": "Turn left, go stairs up, pass in front of Brezelkoenig, continue walking till platform 12a, stairs-up"
+      }
+    },
+    {
+      "lifespanCount": 99,
+      "name": "projects/inhouse-nav/agent/sessions/sessionId/contexts/_actions_on_google",
+      "parameters": {
+        "data": "{\"requestedPermission\":\"DEVICE_PRECISE_LOCATION\"}"
+      }
+    }
+  ],
+  "payload": {
+    "google": {
+      "expectUserResponse": true,
+      "richResponse": {
+        "items": [
+          {
+            "simpleResponse": {
+              "textToSpeech": "Turn left, go stairs up, pass in front of Brezelkoenig, continue walking till platform 12a, stairs-up"
+            }
+          }
+        ]
+      },
+      "isSsml": false,
+      "systemIntent": {
+        "intent": "actions.intent.TEXT",
+        "data": {}
+      },
+      "userStorage": "{\"data\":{}}"
+    }
+  }
+}

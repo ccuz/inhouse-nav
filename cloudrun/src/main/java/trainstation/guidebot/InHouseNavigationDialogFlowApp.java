@@ -25,11 +25,22 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InHouseNavigationDialogFlowApp.class);
 
-    private ResourceBundle messages = ResourceBundle.getBundle("messages");
+    private Map<Locale, ResourceBundle> messages = new HashMap<>();
+
+    private ResourceBundle getMessages(Locale locale){
+        if (locale == null){
+            return ResourceBundle.getBundle("messages");
+        }
+        if (!messages.containsKey(locale)){
+            ResourceBundle localeResourceBundle = ResourceBundle.getBundle("messages", locale);
+            messages.put(locale, localeResourceBundle);
+        }
+        return messages.get(locale);
+    }
 
     @ForIntent("Default Fallback Intent")
     public ActionResponse fallback(ActionRequest request) {
-        ResourceBundle responses = ResourceBundle.getBundle("responses");
+        ResourceBundle responses = getMessages(request.getLocale());
         String didNotUnderstand = responses.getString("didNotUnderstand");
 
         return getResponseBuilder(request)
@@ -47,7 +58,7 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
                         .setPermissions(new String[]{
                                 ConstantsKt.PERMISSION_DEVICE_PRECISE_LOCATION
                         })
-                        .setContext(messages.getString("toLocateYou"))
+                        .setContext(getMessages(request.getLocale()).getString("toLocateYou"))
                 );
         responseBuilder.getConversationData().put("requestedPermission", "DEVICE_PRECISE_LOCATION");
 
@@ -84,7 +95,7 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
         if (location != null){
             if (isNotBlank(location.getCity())) {
                 final String city = location.getCity();
-                final String locationString = format(messages.getString("youAreAt"), city);
+                final String locationString = format(getMessages(request.getLocale()).getString("youAreAt"), city);
 
                 SimpleResponse textToSpeachResponse = new SimpleResponse();
                 textToSpeachResponse.setTextToSpeech(locationString);
@@ -105,11 +116,11 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
                 responseBuilder = responseBuilder.use(response);
             } else {
                 responseBuilder
-                        .add(format(messages.getString("cannotLocateYourCity")));
+                        .add(format(getMessages(request.getLocale()).getString("cannotLocateYourCity")));
             }
         } else {
             responseBuilder
-                    .add(format(messages.getString("cannotLocateYou")));
+                    .add(format(getMessages(request.getLocale()).getString("cannotLocateYou")));
         }
 
         return responseBuilder.build();
@@ -137,7 +148,7 @@ public class InHouseNavigationDialogFlowApp extends DialogflowApp {
 
 
         String destination = (String) request.getParameter("destination");
-        String mockedRoutingServiceResponse = format(messages.getString("mockedRoute"), destination);
+        String mockedRoutingServiceResponse = format(getMessages(request.getLocale()).getString("mockedRoute"), destination);
 
         SimpleResponse textToSpeachResponse = new SimpleResponse();
         textToSpeachResponse.setTextToSpeech(mockedRoutingServiceResponse);
